@@ -69,14 +69,31 @@
 
 
 
+ 
+
+
+ 
 
 
 
 
 
- <li  class=" nav-item dropdown" style="padding-bottom: 10px;">
-<a id=" " class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-  <i class="fa fa-bell fa-md"></i>
+
+
+
+
+
+
+
+
+<li class="nav-item dropdown">
+                            <a id="navbarDropdown"
+ class="nav-link dropdown-toggle" 
+ href="#" role="button" data-toggle="dropdown" 
+ aria-haspopup="true" aria-expanded="false" v-pre>
+                                
+ 
+ <i class="fa fa-bell fa-md"></i>
        <label class="badge fa-md">
  <?php
 $c=0;
@@ -84,44 +101,56 @@ $c=0;
  {
 $c+=$n->type=="App\Notifications\CommentNotification"?1:0;
  }
- echo $c;
+ echo  $c;
 ?>
-    </label>  </a>
+    </label>
+                                 <span class="caret"></span>
+                            </a>
 
-<div class="msgs dropdown-menu dropdown-menu-center" aria-labelledby="msgsDropdown"  >
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                               
+                            
+
+
+
+
+
 <a class="dropdown-item text-center" style="color: blue;font-weight: bold; "
-href="{{route('notification.readAll')}}">
-MakeAll As Read
+href="{{route('notification.readAll')}}"> Make All As Read</a>
 
-</a>
 @foreach(auth()->user()->Notifications as $notification)
 
-@if($notification->unread() && $notification->type=="App\Notifications\CommentNotifcation")
+@if($notification->unread() && 
+$notification->type=="App\Notifications\CommentNotifcation")
 <a class="dropdown-item"
  
 
-href="{{route('notification.read',[$notification->id,$notification->data['postId']])}}"
+href="{{route('notification.read',[$notification->id,
+    $notification->data['postId']])}}"
 style="background-color: black;color: white">
 {{ $notification->created_at->diffForHumans() }}
 {{ $notification->data['body'] }}</a>
 
-@elseif($notification->read() && $notification->type=="App\Notifications\CommentNotifcation")
+@elseif($notification->read() && 
+$notification->type=="App\Notifications\CommentNotifcation")
 <a class="dropdown-item" 
-href="{{route('notification.read',[$notification->id,$notification->data['postId']])}}">
+href="{{route('notification.read',[$notification->id,
+    $notification->data['postId']])}}">
 {{ $notification->created_at->diffForHumans() }}
 {{ $notification->data['body'] }}
 </a>
 @endif
+
+
 @endforeach
 
-<!-- <notification :userid="{{auth()->user()->id}}" :unreads="{{Auth()->user()->unreadNotifications}}"></notification>   -->
 
-</li>
+                                 
 
-
-
-
-
+                                 
+                            </div>
+                        </li>
 
 
 
@@ -152,7 +181,8 @@ href="{{route('notification.read',[$notification->id,$notification->data['postId
   
 </li>
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown"
+ class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
 
                                  <span class="caret"></span>
