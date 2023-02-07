@@ -64,7 +64,14 @@ Route::post("/updatereply",'ReplyController@update')->name("reply.update");
 
 
 
-Route::get('/notification/readAll',function(){return "read all";})->name("notification.readAll");
+Route::get('/notification/readAll',function(){
+
+foreach(auth()->user()->Notifications as $n){$n->markAsRead();   }
+
+return redirect()->back();
+
+} 
+    )->name("notification.readAll");
 Route::get('/notification/read/{nid}/{pid}',function($nid,$pid){
     
 

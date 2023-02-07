@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section("title",$post->content)
+@section("title",$post->user->name." `s post")
 @section("content")
 
 <div class=" container-fluid">
