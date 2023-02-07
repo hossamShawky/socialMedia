@@ -93,6 +93,11 @@ Route::get('/account/review','UserMailsController@reviewAccount')->name("account
 
 
 
+
+Route::post("/search",'UserController@searchContent')->name("content.search");
+
+
+
 });
 
 

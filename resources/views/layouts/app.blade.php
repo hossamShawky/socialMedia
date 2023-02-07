@@ -93,7 +93,7 @@
  aria-haspopup="true" aria-expanded="false" v-pre>
                                 
  
- <i class="fa fa-bell fa-md"></i>
+ <i class="fa fa-bell fa-lg"></i>
        <label class="badge fa-md">
  <?php
 $c=0;
@@ -118,14 +118,14 @@ $c+=$n->type=="App\Notifications\CommentNotification"?1:0;
 
 <a class="dropdown-item text-center" style="color: blue;font-weight: bold; "
 href="{{route('notification.readAll')}}"> Make All As Read</a>
+ 
 
 @foreach(auth()->user()->Notifications as $notification)
 
 @if($notification->unread() && 
-$notification->type=="App\Notifications\CommentNotifcation")
+$notification->type=="App\Notifications\CommentNotification")
 <a class="dropdown-item"
  
-
 href="{{route('notification.read',[$notification->id,
     $notification->data['postId']])}}"
 style="background-color: black;color: white">
@@ -133,7 +133,7 @@ style="background-color: black;color: white">
 {{ $notification->data['body'] }}</a>
 
 @elseif($notification->read() && 
-$notification->type=="App\Notifications\CommentNotifcation")
+$notification->type=="App\Notifications\CommentNotification")
 <a class="dropdown-item" 
 href="{{route('notification.read',[$notification->id,
     $notification->data['postId']])}}">
@@ -155,6 +155,17 @@ href="{{route('notification.read',[$notification->id,
 
 
 
+<!-- search about user or post -->
+
+                        <li>
+
+ <form action="{{route('content.search')}}" method="POST">
+                   {{csrf_field()}}
+             <input type="text" name="searchTxt" 
+             class=" form-control input-md"
+           placeholder="Search about you want">  
+                        
+      </form></li>
 
 
 
