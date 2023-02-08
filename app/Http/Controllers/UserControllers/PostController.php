@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\General;
-use App\Models\Post; 
-use App\Models\Love;
+use App\Models\{Post,Love};
+
 use Auth;  
 use Illuminate\Support\Facades\DB;
 class PostController extends Controller

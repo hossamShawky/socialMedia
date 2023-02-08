@@ -21,8 +21,21 @@ Route::get("/home","HomeController@welcome")->name("welcome");
 Route::group(['namespace'=>'UserControllers','middleware'=>'auth'],function (){
     
     Route::get("/index",'UserController@index')->name("index");
+    
     Route::get("/myprofile",'UserController@myProfile')->name("myprofile");
-    Route::get("/profile/{id}",'UserController@profile')->name("profile");
+    Route::post("/user/updateAvtar",'UserController@updateAvtar')
+                    ->name("user.update.avatar");
+
+                    
+    Route::get("/user/editProfile/{id}",'UserController@edit')
+    ->name("user.edit");
+
+
+    
+    Route::post("/user/updateProfile",'UserController@update')
+    ->name("user.update");
+
+    Route::get("/profile/{id}",'UserController@show')->name("profile");
 
 
     
@@ -64,29 +77,8 @@ Route::post("/updatereply",'ReplyController@update')->name("reply.update");
 
 
 
-Route::get('/notification/readAll',function(){
-
-foreach(auth()->user()->Notifications as $n){$n->markAsRead();   }
-
-return redirect()->back();
-
-} 
-    )->name("notification.readAll");
-Route::get('/notification/read/{nid}/{pid}',function($nid,$pid){
-    
-
-
-    foreach(auth()->user()->Notifications as $n){
-
-        if($n->id == $nid){
-              $n->markAsRead();
-         
-    }
-}
-
-return redirect()->route("post.view",$pid);
-
-})->name("notification.read");
+Route::get('/notification/readAll',"NotificationController@readAll")->name("notification.readAll");
+Route::get('/notification/read/{nid}/{pid}',"NotificationController@readNotification")->name("notification.read");
 
 
 Route::get('/account/review','UserMailsController@reviewAccount')->name("account.review");
@@ -141,5 +133,9 @@ return Reply::find($id)->subReplies;
  Route::get("test",function(){
     // foreach(auth()->user()->unreadNotifications as $n)
 
-    return App\Models\User::find(1)->Notifications;
+    // return App\Models\User::find(1)->Notifications;
+
+    // return $user= App\Models\User::find(Auth::id())->getChanges();
+  
+
  });

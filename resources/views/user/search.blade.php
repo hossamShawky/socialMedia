@@ -8,7 +8,9 @@
     @isset($message)
     <div class="container alert alert-danger alert-block">
 <button type="button" class="close" data-dismiss="alert">×</button>
-             <strong>    {{$message }}                </strong>
+             <strong>
+                  {{$message }}  About :   <e class="alert-info">{{$query}} </e>
+              </strong>
     </div>
     @endisset
 

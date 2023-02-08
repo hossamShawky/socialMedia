@@ -1,52 +1,77 @@
 @extends("layouts.app")
-@section("title","Home Page")
+@section("title","User Profile")
 @section("content")
 
-<div class="container">
-  
+<div class="container-fluid">
 
-  
-
- 
-         <!-- @if(Session::has('error'))
-        <div class="container alert alert-danger alert-block">
+    @if(Session::has('message'))
+    <div class="container alert alert-success alert-block">
 <button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong>    {{Session('error')}}                </strong>
-        </div>
-        @endif
-        @if(Session::has('message'))
-        <div class="container alert alert-success alert-block">
+             <strong>    {{Session('message')}}                </strong>
+    </div>
+    @endif
+
+    
+    @if(Session::has('error'))
+    <div class="container alert alert-danger alert-block">
 <button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong>    {{Session('message')}}                </strong>
-        </div>
-        @endif -->
+             <strong>    {{Session('error')}}                </strong>
+    </div>
+    @endif
 
-        
-<!-- get all posts -->
- 
-@if($errors->any())
-<br>
-<div class=" container alert alert-danger inline-block"> 
-<ul>
-@foreach($errors->all() as $error)
-<li>{{$error}}</li>
-@endforeach
-</ul>
-</div>
-@endif
+    
 
-          
-<div class="col-lg-12 col-md-12 col-sm-12  text-center">
-  @if(Session::has('error'))
-      <b class="alert alert-danger">{{Session('error')}}</b>
-  @endif
-  @if(Session::has('message'))
-      <b class="alert alert-success">{{Session('message')}}</b>
-  @endif
+
+<div class="row">
+
+<div class="col-md-8 col-md-offset-1" style="float: left;">
+	<a href="/viewPic/{{$user->avatar}}">
+	<img src="/media/{{$user->avatar}} "
+	style="width: 150px;height: 150px;float: left;
+    border-radius: 50%;margin-right: 10%; margin-left: 2%;"> </a>
+
+ 	<p>
+
+   
+
+<h3><a href="{{route('myprofile')}}" >
+  {{$user->name}}</a></h3>
+ <b>{{"BIO : ".$user->bio}}</b><br>
+ <b>{{"Status : ".$user->getStatus()}}</b><br>
+ <b>{{"Joined : " .$user->created_at->format('M') ." - ".$user->created_at->year}}</b><br>
+    </p>
+
+
+
+
+<form   enctype="multipart/form-data" 
+action="{{route('user.update.avatar')}}" method="post">
+
+		<!-- <label class="label" >Update Image <i class="fa fa-cogs"></i></label> -->
+		<input class="form-control" type="file" name="avatar" required style="width: 35%;display: inline-block;">
+		<input type="hidden" name="_token" value="{{csrf_token()}}">
+		<input type="hidden" name="user_id" value="{{$user->id}}">
+		<input
+		type="submit" value="Update Image" class="pull-right btn  btn-primary">
+
+
+</form>
+
 </div>
- 
-<!-- Comments  -->
-<div class="bootstrap snippets bootdey">
+<p class="actions">
+<a class="btn btn-danger pull-right" href="/deleteProfile/{{$user->id}}">Delete Account</a>
+<a class="btn btn-primary pull-right  " href="" >Settings</a>
+<a class="btn btn-primary pull-right  "
+ href="{{route('user.edit',$user->id)}}" >Edit Profile</a>
+ </p>
+
+	</div>
+<hr>
+
+
+</div>
+
+<div class="bootstrap snippets bootdey container-fluid">
     <div class="row">
 		<div class="col-lg-12">
 		    <div class="blog-comment">
@@ -131,18 +156,13 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
 </div>
 
 @endsection
- 
+
+
+
+
+
+
+
 
 <link href="{{ asset('css/post_comment_reply.css') }}" rel="stylesheet">
  
-
-
-
-<script>
-
-//  setTimeout(() => {
-//  document.location.reload();
-//  }, 5000);
-
-
-</script>

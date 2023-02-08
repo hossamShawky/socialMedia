@@ -4,9 +4,10 @@ namespace App\Http\Controllers\UserControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Comment;
-use App\Models\Love;
-use App\Models\Post;
+ 
+ 
+
+use App\Models\{User,Post,Comment,Love};
 use DB;
 use Auth;
 use Illuminate\Support\Facades\Validator;

@@ -13,6 +13,7 @@ class Post extends Model
         'user_id', 'media', 'content','privacy', 'created_at','updated_at'
 
     ];
+ 
 
 
 public function user(){

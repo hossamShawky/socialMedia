@@ -56,6 +56,13 @@
                 @else
                 <ul class="navbar-nav mr-auto" id="Llinks">
 
+ <li style=" color:white">
+ <button type="button" onclick="goBack()" class="btn btn-danger">
+    <i class="fa fa-arrow-left fa-lg"></i></button></li>
+
+
+
+
 
 <li style="margin-top: 2px;"><a style="color: white;" href="{{route('index')}}">
 
@@ -227,5 +234,18 @@ href="{{route('notification.read',[$notification->id,
             <router-view></router-view>
         </main>
     </div>
+
+<script>
+
+    
+	function goBack(){
+		history.go(-1);
+    }
+
+    function goForward(){
+		history.go(1);
+    }
+    
+</script>
 </body>
 </html>
