@@ -70,6 +70,21 @@ class User extends Authenticatable implements JWTSubject
     public function replies(){
         return $this->hasMany("App\Models\Reply");
     }
+
+
+
+    public function follows(){
+        return $this->hasMany("App\Models\Follow");
+    }
+
+
+    public function followers(){
+        return $this->hasMany("App\Models\Follow",'followd_id');
+    }
+
+
+
+
      
 
 

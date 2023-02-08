@@ -59,15 +59,63 @@ action="{{route('user.update.avatar')}}" method="post">
 
 </div>
 <p class="actions">
-<a class="btn btn-danger pull-right" href="/deleteProfile/{{$user->id}}">Delete Account</a>
+  
+ 
+<a data-toggle="modal" data-target="#deleteprofile" class="btn btn-danger pull-right" href="#">Delete Account</a>
 <a class="btn btn-primary pull-right  " href="" >Settings</a>
-<a class="btn btn-primary pull-right  "
- href="{{route('user.edit',$user->id)}}" >Edit Profile</a>
- </p>
+<a class="btn btn-primary pull-right  " href="{{route('user.edit',$user->id)}}" >Edit Profile</a>
+<br><br>
+ 
+<a href="">{{count($following)}}  Following </a>
+ <a href="">{{count($followers)}}  Followers </a>
+
+</p>
 
 	</div>
 <hr>
 
+
+
+
+ 
+<div id="deleteprofile" class="modal fade">
+  <div class="modal-dialog">
+      <div class="modal-content">
+
+          <div class="modal-header">
+              <h4 class="modal-title">Delete Profile</h4>
+                 <button type="button" class="close btn btn-danger" data-dismiss="modal"><span>&times;</span><span class="sr-only">Close</span></button>
+          </div>
+       <div class="modal-body">   
+<form method="post" class="text-center"  action="{{URL('/user/delete')}}" >
+
+{{csrf_field() }}
+
+<input type="hidden" name="userid" value="{{$user->id}}"> 
+Are You Sure To Delete Your Profile<br>
+<input type="radio" name="res" id="yes" value="Yes"><label for="yes">Yes</label>
+
+<input type="radio" name="res" id="no" value="No"><label for="no">No</label>
+<br>
+<input class="btn btn-danger" type="submit" name="delete" value="Confirm">
+</form>
+      </div>
+      
+       <div class="modal-footer">  
+      <a class="btn btn-danger" href="/profile/{{$user->id}}">Cancel</a>
+       </div>
+     
+
+      </div>
+  </div>
+ 
+ 
+
+  </div>
+</div>
+
+
+</div>
 
 </div>
 

@@ -9,10 +9,19 @@ class NotificationController extends Controller
 
     public function readAll(){
     
-auth()->user()->unreadNotifications->toQuery()->update([
-    'read_at'=>Carbon::now()
-]);
-return redirect()->back();
+try{
+    auth()->user()->unreadNotifications->toQuery()->update([
+        'read_at'=>Carbon::now()
+    ]);
+    return redirect()->back();
+    
+}
+catch(\Exception $ex){
+    return $ex;
+   return  redirect()->back()->with('error'," There Is Some Problems.");
+
+}
+
 
 
 }
@@ -20,7 +29,7 @@ return redirect()->back();
 public function readNotification( $nid,$pid){
     
 
-        foreach(auth()->user()->Notifications as $n){
+        foreach(auth()->user()->unreadNotifications as $n){
 
             if($n->id == $nid){
                 $n->markAsRead();

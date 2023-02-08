@@ -77,12 +77,15 @@ if($comment) {
 
  $post = Post::find($request->post_id);
  $user=$post->user;
-      $details = [
-    'body' => $comment->user->name.' commented on your post',
-    'postId'=>$post->id,
-   ];
-    $user->notify(new \App\Notifications\CommentNotification ($details));
-
+ 
+ if($post->user != $comment->user){
+    $details = [
+        'body' => $comment->user->name.' commented on your post',
+        'postId'=>$post->id,
+       ];
+        $user->notify(new \App\Notifications\CommentNotification ($details));
+    
+ }
 
 
     return redirect()->back()->with("message","Comment Added.");
@@ -124,7 +127,10 @@ if($comment) {
          
         try{
             $comment= Comment::find($id);
-             return view("comment.edit",compact('comment'));
+if(Auth::id()==$comment->user->id)
+            return view("comment.edit",compact('comment'));
+             return  redirect()->back()->with('error'," You Have`t The Right To Access This Page.");
+
          }
          catch(\Exception $ex){
             //   return $ex;

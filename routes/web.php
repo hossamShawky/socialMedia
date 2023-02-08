@@ -35,7 +35,15 @@ Route::group(['namespace'=>'UserControllers','middleware'=>'auth'],function (){
     Route::post("/user/updateProfile",'UserController@update')
     ->name("user.update");
 
+
+    
+
+    
+    Route::get("/profile/{nid}/{id}",'UserController@notificationProfile')->name("notification.profile");
     Route::get("/profile/{id}",'UserController@show')->name("profile");
+
+    Route::get("/user/follow/{id}",'FollowController@follow')->name("user.follow");
+    Route::get("/user/unfollow/{id}",'FollowController@unfollow')->name("user.unfollow");
 
 
     
@@ -136,6 +144,11 @@ return Reply::find($id)->subReplies;
     // return App\Models\User::find(1)->Notifications;
 
     // return $user= App\Models\User::find(Auth::id())->getChanges();
-  
+    /*
+    count($user->followers);
+    */
+    $user = Auth::user();
+    $fo  = App\Models\Follow::where("followed_id",$user->id)->get();
+    return $fo;
 
  });

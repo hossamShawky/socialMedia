@@ -126,7 +126,11 @@ return  redirect()->back()->with('error'," This Post Not Found.");
     {
         try{
            $post= Post::find($id);
+           if($post->user->id == Auth::id())
             return view("post.edit",compact('post'));
+
+            return  redirect()->back()->with('error'," You Have`t The Right To Access This Page.");
+
         }
         catch(\Exception $ex){
             // return $ex;
@@ -250,6 +254,17 @@ return redirect()->back();
                 $love->user_id=Auth::id();
                 $love->post_id=$id;
   $love->save();
+
+ if($post->user != $love->user){
+    $details = [
+        'body' => $love->user->name.' Loved your post',
+        'postId'=>$id, 
+       ];
+        $post->user->notify(new \App\Notifications\LovePostNotification ($details));
+    
+ }
+
+
   return  redirect()->back();
                 
             }

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use App\Models\Reply;
+use Auth;
 class ReplyController extends Controller
 {
     /**
@@ -115,7 +116,11 @@ if($reply) {
          
         try{
             $reply= Reply::find($id);
+            if(Auth::id()==$reply->user->id)
+
              return view("reply.edit",compact('reply'));
+             return  redirect()->back()->with('error'," You Have`t The Right To Access This Page.");
+
          }
          catch(\Exception $ex){
             //   return $ex;

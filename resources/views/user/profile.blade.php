@@ -3,7 +3,14 @@
 @section("content")
 
 <div class="container-fluid">
-
+<div class="col-lg-12 col-md-12 col-sm-12  text-center">
+  @if(Session::has('error'))
+      <b class="alert alert-danger">{{Session('error')}}</b>
+  @endif
+  @if(Session::has('message'))
+      <b class="alert alert-success">{{Session('message')}}</b>
+  @endif
+</div>
 
 <div class="row">
 
@@ -33,8 +40,29 @@
 <p class="actions">
 <a class="btn btn-danger pull-right   " href="#">Report </a>
 <a class="btn btn-primary pull-right  " href="#" >Star</a>
-<a class="btn btn-primary pull-right  " href="#" >Follow </a>
- </p>
+
+
+@if($status == true )
+
+ <a class="btn btn-primary pull-right  " title="Follow {{$user->name}} to see more posts"
+ href="{{route('user.unfollow',$user->id)}}" >Un Follow </a>
+ 
+ @else
+ 
+<a class="btn btn-primary pull-right  " title="Follow {{$user->name}} to see more posts"
+ href="{{route('user.follow',$user->id)}}" >Follow </a>
+
+ @endif
+ 
+
+
+ <br><br>
+ <a href="">{{count($following)}}  Following </a>
+ <a href="">{{count($followers)}}  Followers </a>
+
+
+
+</p>
 
 	</div>
 <hr>
@@ -96,7 +124,7 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
   </form>
 
 
-<div class="small d-flex justify-content-start" style="margin-bottom: -2%;" >
+<div class="small d-flex justify-content-start" style="margin-bottom: 0%;" >
 
   
   <a href="{{route('post.love',$post->id)}}" class="d-flex align-items-center me-3">

@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Session;
 use Auth;
-use App\Models\{User,Post,Comment};
+use App\Models\{User,Post,Comment,Follow};
 use DB;
 class UserController extends Controller
 {
@@ -72,7 +72,12 @@ catch(\Exception $ex){
         try{
             $user = Auth::user();
             $posts= $user->posts;//->get(['id','user_id','content','media','created_at']);
-            
+            $following = $user->follows;
+            $followers = Follow::where("followed_id",$user->id)->get();
+  
+ return view('user.myprofile',compact(['user','posts','following','followers']));
+
+        
              return view('user.myProfile',compact(['user','posts']));
 
         }
@@ -161,7 +166,12 @@ if (Auth::id()==$user->id) return redirect()->route("myprofile");
 
 $posts= $user->posts;
 
-return view('user.profile',compact(['user','posts']));
+$following = $user->follows;
+$followers = Follow::where("followed_id",$user->id)->get();
+ 
+$status =count(Follow::where('user_id' ,"=", Auth::id())
+->where('followed_id' , "=",$user->id)->get())>0? true:false;
+ return view('user.profile',compact(['user','posts','following','followers','status']));
 
             }
             else{
@@ -171,10 +181,30 @@ return view('user.profile',compact(['user','posts']));
        }
        catch(\Exception $ex)
        {
-           // return $ex;  
+        //    return $ex;  
            return redirect()->back()->with("error","There Are Some Problems,Please Try Again.");
        }
    
+    }
+
+    public function notificationProfile($nid,$id){
+
+        try{
+            foreach(auth()->user()->unreadNotifications as $n){
+
+                if($n->id == $nid){
+                    $n->markAsRead();
+                
+            }
+    return $this->profile($id);
+        }
+        return redirect()->route("profile",$id);
+    }
+catch(\Exception $ex)
+{
+ //    return $ex;  
+    return redirect()->back()->with("error","There Are Some Problems,Please Try Again.");
+}
     }
 
     /**
@@ -187,10 +217,9 @@ return view('user.profile',compact(['user','posts']));
     {
         $user=User::find($id);
         try{
-            if($user)
+            if($user && $id == Auth::id())
              return view("user.edit",compact('user'));
-          return  redirect()->back()
-          ->with('error'," There Is Some Problems.");
+             return  redirect()->back()->with('error'," You Have`t The Right To Access This Page.");
 
          }
          catch(\Exception $ex){

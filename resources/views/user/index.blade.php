@@ -77,8 +77,10 @@
 @endif
 </p>
 				      <p>
-<b style="width: 50%;">{{$post->content}}</b>				  
-@if($post->media)<img src="/media/{{$post->media}}" class="avatr" alt="image not found" style="width:50%;height: 10%;margin-left: 25%;;">@endif
+<b style="width: 40%; height:auto;  ">{{$post->content}}</b>				  
+@if($post->media)<img src="/media/{{$post->media}}"
+ class="avatr" alt="image not found" 
+ style="width:60%;height: 8%;margin-left: 25%;">@endif
 
 </p> 
 
@@ -91,7 +93,7 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
   <input type="hidden" name="user_id" value="{{Auth::id()}}">
   <input type="hidden" name="post_id" value="{{$post->id}}">
   <input type="text" name="content" class="form-control" id="textAreaExample"
-   placeholder="Leave Your Comment" style="width: 70%; height: 1.5% ;display: inline;" >
+   placeholder="Leave Your Comment" style="width: 80%; height: 1% ;display: inline;" >
  <label   for="myfile"><e>Image</e><i class="far fa-image me-2"></i></label>
   <input type="file" id="myfile" name="media" style="display: none;">
   <button class="btn btn-primary" type="submit"><i class="far fa-paper-plane me-2"></i></button>
@@ -100,7 +102,7 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
   </form>
 
 
-<div class="small d-flex justify-content-start" style="margin-bottom: -2%;" >
+<div class="small d-flex justify-content-start" style="margin-bottom: -1%;" >
 
   
   <a href="{{route('post.love',$post->id)}}" class="d-flex align-items-center me-3">

@@ -106,7 +106,9 @@
 $c=0;
  foreach(auth()->user()->unreadNotifications as $n)
  {
-$c+=$n->type=="App\Notifications\CommentNotification"?1:0;
+    $c+=$n->type=="App\Notifications\CommentNotification"?1:0;
+    $c+=$n->type=="App\Notifications\LovePostNotification"?1:0;
+    $c+=$n->type=="App\Notifications\FollowNotification"?1:0;
  }
  echo  $c;
 ?>
@@ -123,9 +125,16 @@ $c+=$n->type=="App\Notifications\CommentNotification"?1:0;
 
 
 
+@if(count(auth()->user()->unreadNotifications)>0)
 <a class="dropdown-item text-center" style="color: blue;font-weight: bold; "
 href="{{route('notification.readAll')}}"> Make All As Read</a>
  
+@else
+
+<a class="dropdown-item text-center" style="color: blue;font-weight: bold; "
+href=""> Make All As Read</a>
+ 
+@endif
 
 @foreach(auth()->user()->Notifications as $notification)
 
@@ -147,10 +156,60 @@ href="{{route('notification.read',[$notification->id,
 {{ $notification->created_at->diffForHumans() }}
 {{ $notification->data['body'] }}
 </a>
+
 @endif
 
 
+<!-- For Following -->
+@if($notification->unread() && 
+$notification->type=="App\Notifications\FollowNotification")
+<a class="dropdown-item"
+ 
+href="{{route('notification.profile',[$notification->id,$notification->data['userId']])}}"
+style="background-color: black;color: white">
+{{ $notification->created_at->diffForHumans() }}
+{{ $notification->data['body'] }}</a>
+
+@elseif($notification->read() && 
+$notification->type=="App\Notifications\FollowNotification")
+<a class="dropdown-item" 
+href="{{route('notification.profile',[$notification->id,$notification->data['userId']])}}">
+{{ $notification->created_at->diffForHumans() }}
+{{ $notification->data['body'] }}
+</a>
+
+@endif
+
+
+
+<!-- For Loving Posts -->
+@if($notification->unread() && 
+$notification->type=="App\Notifications\LovePostNotification")
+<a class="dropdown-item"
+ 
+href="{{route('notification.read',[$notification->id,$notification->data['postId']])}}"
+style="background-color: black;color: white">
+{{ $notification->created_at->diffForHumans() }}
+{{ $notification->data['body'] }}</a>
+
+@elseif($notification->read() && 
+$notification->type=="App\Notifications\LovePostNotification")
+<a class="dropdown-item" 
+href="{{route('notification.read',[$notification->id,$notification->data['postId']])}}">
+{{ $notification->created_at->diffForHumans() }}
+{{ $notification->data['body'] }}
+</a>
+
+@endif
+ 
+
+
+
 @endforeach
+
+
+
+
 
 
                                  
