@@ -97,7 +97,7 @@ if($comment) {
     }
 
     catch(\Exception $ex){
-        return $ex;
+        // return $ex;
         DB::rollback();
         return  redirect()->back()->with('error'," There Is Some Problems.");
 

@@ -64,7 +64,7 @@ class ReplyController extends Controller
             'content'=>$request->content,
         ]);
 
-        $reply->reply_id= ($request->reply_id)? $request->reply_id:"";
+  $reply->reply_id= ($request->reply_id)? $request->reply_id:0;
 
 
         if($request->hasFile('media')) {
