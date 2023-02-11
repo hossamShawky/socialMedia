@@ -1,6 +1,6 @@
    body{
     background:#eee;
-}
+ }
 
 hr {
     margin-top: 20px;
@@ -94,3 +94,38 @@ a {
 	line-height: 30px;
 	font-weight: 800;
 } 
+
+
+.modal-dialog {
+
+	width: 50%;
+
+}
+.follow-img {
+	width: 15%;
+	height: 15%;
+	border-radius: 50%;
+	margin-right: 5%;
+}
+
+
+
+ 
+
+#loading {
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #888;
+	z-index: 9999;
+	color: #fff;
+ }
+
+#loading .spinner {
+
+ 	text-align: center;
+	margin:  15% 0 0 50% ;
+}

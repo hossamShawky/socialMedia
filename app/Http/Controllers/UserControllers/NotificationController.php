@@ -28,15 +28,9 @@ catch(\Exception $ex){
 
 public function readNotification( $nid,$pid){
     
-
-        foreach(auth()->user()->unreadNotifications as $n){
-
-            if($n->id == $nid){
-                $n->markAsRead();
-            
-        }
-    }
-
+    $notification = auth()->user()->unreadNotifications->
+    where('id',$nid);
+      $notification->markAsRead();  
 return redirect()->route("post.view",$pid);
 
 }

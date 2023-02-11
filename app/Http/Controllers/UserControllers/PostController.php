@@ -40,10 +40,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     { 
+ 
         $validator = Validator::make($request->all(),[
             'content'=>'string|required',
             'user_id'=>'required|exists:users,id',
-            'media'=>'mimes:jpg,jpeg,png|max:25555',
+            'media'=>'mimes:jpg,jpeg,png,mp4|max:25555',
         ]
         );
        
@@ -153,7 +154,7 @@ return  redirect()->back()->with('error'," This Post Not Found.");
         $validator = Validator::make($request->all(),[
             'content'=>'string|required',
             'post_id'=>'required|exists:posts,id',
-            'media'=>'mimes:jpg,jpeg,png|max:25555',
+            'media'=>'mimes:jpg,jpeg,png,mp4|max:25555',
         ]
         );
        

@@ -146,9 +146,16 @@ return Reply::find($id)->subReplies;
     // return $user= App\Models\User::find(Auth::id())->getChanges();
     /*
     count($user->followers);
-    */
-    $user = Auth::user();
-    $fo  = App\Models\Follow::where("followed_id",$user->id)->get();
+
+                $followers = Follow::where("followed_id",$user->id)->get();
+
+ $user = Auth::user();
+    $fo  = App\Models\Follow::where("followed_id",3)->get();;
     return $fo;
+
+    */
+   
+
+    return \Artisan::call("config:cache");
 
  });

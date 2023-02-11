@@ -5,12 +5,20 @@
 <div class="container ">
 
 
-    @isset($message)
+    @isset($error)
     <div class="container alert alert-danger alert-block">
 <button type="button" class="close" data-dismiss="alert">×</button>
              <strong>
-                  {{$message }}  About :   <e class="alert-info">{{$query}} </e>
+                  {{$error }}  About :   <e class="alert-info">{{$query}} </e>
               </strong>
+    </div>
+    @endisset
+
+    @isset($message)
+    <div class="container alert alert-info alert-block">
+<button type="button" class="close" data-dismiss="alert">×</button>
+             <strong>
+                 Search Result  {{$message }}                 </strong>
     </div>
     @endisset
 
@@ -46,6 +54,11 @@
     @isset($posts)
 
 @foreach($posts as $post)
+@php
+$postMediaType=false;
+if(strpos($post->media,".mp4") ) 
+$postMediaType = true;
+          @endphp
 <li class="clearfix">
     <img src="/media/{{$post->user->avatar}}" class="avatar" alt="">
                       <div class="post-comments">
@@ -68,8 +81,14 @@
     </p>
                           <p>
     <b style="width: 50%;">{{$post->content}}</b>				  
-    @if($post->media)<img src="/media/{{$post->media}}" class="avatr" alt="image not found" style="width:50%;height: 10%;margin-left: 25%;;">@endif
-    
+    @if($post->media && !$postMediaType)<img src="/media/{{$post->media}}"
+ class="avatr" alt="image not found" 
+ style="width:60%;height: 8%;margin-left: 25%;">
+@elseif($post->media && $postMediaType)
+<video  style="width:60%;height: 8%;margin-left: 25%;" controls>
+<source src="/media/{{$post->media}}">
+</video>
+@endif
     </p> 
     
     

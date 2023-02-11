@@ -1,10 +1,13 @@
 @extends("layouts.app")
 @section("title","Home Page")
 @section("content")
+<link href="{{ asset('css/user.css') }}" rel="stylesheet">
 
 <div class="container">
   
-
+<section id="loading">
+  <i class="fas spinner fa-spinner fa-3x fa-spin text-center "></i>
+</section>
   
 
  
@@ -56,6 +59,12 @@
 
           @isset($posts)
           @foreach($posts as $post)
+
+         @php
+$postMediaType=false;
+if(strpos($post->media,".mp4") ) 
+$postMediaType = true;
+          @endphp
 <li class="clearfix">
 <img src="/media/{{$post->user->avatar}}" class="avatar" alt="">
 				  <div class="post-comments">
@@ -78,10 +87,15 @@
 </p>
 				      <p>
 <b style="width: 40%; height:auto;  ">{{$post->content}}</b>				  
-@if($post->media)<img src="/media/{{$post->media}}"
+@if($post->media && !$postMediaType)<img src="/media/{{$post->media}}"
  class="avatr" alt="image not found" 
- style="width:60%;height: 8%;margin-left: 25%;">@endif
-
+ style="width:60%;height: 8%;margin-left: 25%;">
+@elseif($post->media && $postMediaType)
+<video  style="width:60%;height: 8%;margin-left: 25%;" controls>
+<source src="/media/{{$post->media}}">
+</video>
+@endif
+ 
 </p> 
 
 
@@ -135,16 +149,12 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
 @endsection
  
 
-<link href="{{ asset('css/post_comment_reply.css') }}" rel="stylesheet">
  
 
 
 
 <script>
 
-//  setTimeout(() => {
-//  document.location.reload();
-//  }, 5000);
-
+ 
 
 </script>

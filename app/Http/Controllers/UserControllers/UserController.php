@@ -9,6 +9,8 @@ use Session;
 use Auth;
 use App\Models\{User,Post,Comment,Follow};
 use DB;
+use Carbon\Carbon;
+
 class UserController extends Controller
 {
     /**
@@ -46,11 +48,12 @@ $posts = Post::where("content","LIKE",'%'.$query.'%')->get();
 $comments = Comment::where("content","LIKE",'%'.$query.'%')->get();
 
 if(count($users) > 0 || count($posts)>0 || count($comments)>0) 
-   return view("user.search",compact(['query','users','posts','comments']));
+   return view("user.search",compact(['query','users','posts','comments']))->with("message",
+count($users)+count($posts));
 
 
-   $message = "There Is No Content";
-   return view("user.search",compact(["query","message"]));
+   $error = "There Is No Content";
+   return view("user.search",compact(["query","error"]));
 
      }
 else{
@@ -74,7 +77,7 @@ catch(\Exception $ex){
             $posts= $user->posts;//->get(['id','user_id','content','media','created_at']);
             $following = $user->follows;
             $followers = Follow::where("followed_id",$user->id)->get();
-  
+             
  return view('user.myprofile',compact(['user','posts','following','followers']));
 
         
@@ -96,7 +99,7 @@ catch(\Exception $ex){
 
   $user=User::find($r->user_id);
            if($r->hasFile('avatar')) {
-   ($user->avatar)? unlink(public_path("media/".$user->avatar)):"";
+   ($user->avatar && $user->avatar != "avatars/def.jpg")? unlink(public_path("media/".$user->avatar)):"";
    
                $image=$r->avatar;
            $filename='avatars/'.$image->hashName();
@@ -188,21 +191,19 @@ $status =count(Follow::where('user_id' ,"=", Auth::id())
     }
 
     public function notificationProfile($nid,$id){
-
+ 
         try{
-            foreach(auth()->user()->unreadNotifications as $n){
-
-                if($n->id == $nid){
-                    $n->markAsRead();
-                
-            }
-    return $this->profile($id);
-        }
+           
+            $notification = auth()->user()->unreadNotifications->
+            where('id',$nid);
+              $notification->markAsRead();      
+              
         return redirect()->route("profile",$id);
+
     }
 catch(\Exception $ex)
 {
- //    return $ex;  
+      return $ex;  
     return redirect()->back()->with("error","There Are Some Problems,Please Try Again.");
 }
     }
@@ -260,7 +261,7 @@ catch(\Exception $ex)
         
 
         if($request->hasFile('avatar')) {
-($user->avatar)? unlink(public_path("media/".$user->avatar)):"";
+            ($user->avatar && $user->avatar != "avatars/def.jpg")? unlink(public_path("media/".$user->avatar)):"";
 
             $image=$request->avatar;
         $filename='avatars/'.$image->hashName();

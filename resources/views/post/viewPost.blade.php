@@ -61,9 +61,22 @@
 
 </p>
  <p>
-<b style="width: 50%;">{{$post->content}}</b>				  
-@if($post->media)<img src="/media/{{$post->media}}" 
-class="avatr" alt="image not found" style="width:50%;height: 10%;margin-left: 25%;">
+<b style="width: 50%;">{{$post->content}}</b>	
+
+@php
+$postMediaType=false;
+if(strpos($post->media,".mp4") ) 
+$postMediaType = true;
+          @endphp
+
+
+@if($post->media && !$postMediaType)<img src="/media/{{$post->media}}"
+ class="avatr" alt="image not found" 
+ style="width:60%;height: 8%;margin-left: 25%;">
+@elseif($post->media && $postMediaType)
+<video  style="width:60%;height: 15%;margin-left: 25%;" controls>
+<source src="/media/{{$post->media}}">
+</video>
 @endif
 
 </p>
@@ -335,4 +348,4 @@ style="width:50%;height: 10%;margin-left: 25%;">@endif
 @endsection
  
 
-<link href="{{ asset('css/post_comment_reply.css') }}" rel="stylesheet">
+<link href="{{ asset('css/user.css') }}" rel="stylesheet">

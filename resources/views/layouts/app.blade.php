@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+
+    
     <link rel = "icon" href = 
 "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png" 
         type = "image/x-icon">
@@ -18,30 +20,36 @@
     <link rel="stylesheet" href=
 "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.css">
 </link>
+
+
+		<script src="https://code.jquery.com/jquery-3.6.3.js" 
+		integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+		
+
+
+
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/appBladeStyle.css') }}" rel="stylesheet">
 
 
 <style>
-    #Llinks li>button,#Llinks li>a{
-  text-decoration: none;
-   margin-left: 12px;
-   margin-top: 2px;
-}
 </style>
 
 
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm " >
+<body class="scrollbar-warning">
+    
+
+<div id="app">
+ <nav class="navbar  navbar-expand-md navbar-light bg-white shadow-sm " >
             <div class="container">
-                <!-- <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ route('index') }}">
                     {{ config('app.name', 'Laravel') }}
-                </a> -->
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -259,7 +267,7 @@ href="{{route('notification.read',[$notification->id,$notification->data['postId
 </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown"
- class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+ class="nav-link dropdown-toggle" href="#"  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}
 
                                  <span class="caret"></span>
@@ -291,20 +299,12 @@ href="{{route('notification.read',[$notification->id,$notification->data['postId
         <main class="py-4">
             @yield('content')
             <router-view></router-view>
+<button onclick="scrollToTop()" id="btn-top" class="btn btn-info" title="Go To Top"> 
+    <i class="fa fa-arrow-up fa-lg"></i>
+</button>
         </main>
     </div>
 
-<script>
-
-    
-	function goBack(){
-		history.go(-1);
-    }
-
-    function goForward(){
-		history.go(1);
-    }
-    
-</script>
+    <script src="{{ asset('js/user.js') }}" defer></script>
 </body>
 </html>

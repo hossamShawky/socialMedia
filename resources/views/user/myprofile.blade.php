@@ -66,8 +66,14 @@ action="{{route('user.update.avatar')}}" method="post">
 <a class="btn btn-primary pull-right  " href="{{route('user.edit',$user->id)}}" >Edit Profile</a>
 <br><br>
  
-<a href="">{{count($following)}}  Following </a>
- <a href="">{{count($followers)}}  Followers </a>
+<a data-toggle="modal" data-target="#followingList"  class='followUsers' href="">{{count($following)}}  Following </a>
+<a  data-toggle="modal" data-target="#followersList"  class='followUsers' href="">{{count($followers)}}  Followers </a>
+
+
+
+<!-- Follows List -->
+@include('includes.follows')
+
 
 </p>
 
@@ -129,6 +135,12 @@ Are You Sure To Delete Your Profile<br>
 
           @isset($posts)
           @foreach($posts as $post)
+          
+         @php
+$postMediaType=false;
+if(strpos($post->media,".mp4") ) 
+$postMediaType = true;
+          @endphp
 <li class="clearfix">
 <img src="/media/{{$post->user->avatar}}" class="avatar" alt="">
 				  <div class="post-comments">
@@ -150,9 +162,16 @@ Are You Sure To Delete Your Profile<br>
 @endif
 </p>
 				      <p>
-<b style="width: 50%;">{{$post->content}}</b>				  
-@if($post->media)<img src="/media/{{$post->media}}" class="avatr" alt="image not found" style="width:50%;height: 10%;margin-left: 25%;;">@endif
-
+<b style="width: 40%; height:auto;  ">{{$post->content}}</b>				  
+@if($post->media && !$postMediaType)<img src="/media/{{$post->media}}"
+ class="avatr" alt="image not found" 
+ style="width:60%;height: 8%;margin-left: 25%;">
+@elseif($post->media && $postMediaType)
+<video  style="width:60%;height: 8%;margin-left: 25%;" controls>
+<source src="/media/{{$post->media}}">
+</video>
+@endif
+ 
 </p> 
 
 
@@ -164,7 +183,7 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
   <input type="hidden" name="user_id" value="{{Auth::id()}}">
   <input type="hidden" name="post_id" value="{{$post->id}}">
   <input type="text" name="content" class="form-control" id="textAreaExample"
-   placeholder="Leave Your Comment" style="width: 70%; height: 1.5% ;display: inline;" >
+   placeholder="Leave Your Comment" style="width: 70%; height: 1% ;display: inline;" >
  <label   for="myfile"><e>Image</e><i class="far fa-image me-2"></i></label>
   <input type="file" id="myfile" name="media" style="display: none;">
   <button class="btn btn-primary" type="submit"><i class="far fa-paper-plane me-2"></i></button>
@@ -212,5 +231,4 @@ action="{{route('comment.store')}}" enctype="multipart/form-data">
 
 
 
-<link href="{{ asset('css/post_comment_reply.css') }}" rel="stylesheet">
- 
+<link href="{{ asset('css/user.css') }}" rel="stylesheet">
