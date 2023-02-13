@@ -21,19 +21,17 @@
    
 </strong>
 <hr>
-@endforeach
+ @endforeach
 @endisset
 
-      </div>
-    </div>
-
-      </div>
-  </div>
+</div>
+</div>
+</div>
+</div>
  
 
 
 <!-- Follower List -->
-
 <div id="followersList" class="modal fade">
   <div class="modal-dialog">
       <div class="modal-content">
@@ -46,16 +44,18 @@
 @isset($followers)
 @foreach($followers as $f)
 
-<a href="{{route('profile',$f->user->id)}}"> 
-  <img class="follow-img" alt="{{$f->user->name}}" 
-  src="/media/{{$f->user->avatar}}"> {{$f->user->name}}</a>
+<strong>
+  <a href="{{route('profile',$f->user->id)}}"> 
+    <img class="follow-img"  alt="{{$f->user->name}}" 
+    src="/media/{{$f->user->avatar}}"> {{$f->user->name}}</a>
+    
+
+   
+</strong>
 <hr>
 @endforeach
 @endisset
 
+       </div>
       </div>
-
-      </div>
-
- 
-<!--  -->
+    </div>

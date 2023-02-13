@@ -1,29 +1,7 @@
 @extends("layouts.app")
 @section("title","Rrply Comment")
 @section("content")
- 
-    @if($errors->any())
-    <br>
-<div class=" container alert alert-danger inline-block"> 
-<ul>
-@foreach($errors->all() as $error)
-<li>{{$error}}</li>
-@endforeach
-</ul>
-</div>
-    @endif
-
-    
-
-    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-        @if(Session::has('error'))
-            <b class="alert alert-danger">{{Session('error')}}</b>
-        @endif
-        @if(Session::has('message'))
-            <b class="alert alert-success">{{Session('message')}}</b>
-        @endif
-    </div>
-
+@include("includes.sessions")
 
     <div id="uploadpost">
         <div class="modal-dialog">

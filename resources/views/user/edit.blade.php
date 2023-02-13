@@ -2,27 +2,9 @@
 @section("title","Edit Profile")
 @section("content")
  
-    @if($errors->any())
-    <br>
-<div class=" container alert alert-danger inline-block"> 
-<ul>
-@foreach($errors->all() as $error)
-<li>{{$error}}</li>
-@endforeach
-</ul>
-</div>
-    @endif
 
-    
+    @include("includes.sessions") 
 
-    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-        @if(Session::has('error'))
-            <b class="alert alert-danger">{{Session('error')}}</b>
-        @endif
-        @if(Session::has('message'))
-            <b class="alert alert-success">{{Session('message')}}</b>
-        @endif
-    </div>
 
  <center>
             <img src="/media/{{$user->avatar}} "

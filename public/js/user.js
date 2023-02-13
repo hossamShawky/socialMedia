@@ -17,12 +17,12 @@ $(window).scroll(function(){
 
     if(document.body.scrollTop > 40 || document.documentElement.scrollTop>40)
     {
-        $("#btn-top").css("display","block");
+        $("#btn-top").fadeIn(1000);
         $(".navbar").css("padding","5px");
         $(".navbar").addClass("fixed-top");
     }
     else{
-      $("#btn-top").css("display","none");
+      $("#btn-top").fadeOut(800);
       $(".navbar").removeClass("fixed-top");
 
     }    
@@ -46,10 +46,10 @@ $(document).ready(function(){
 
 $(".spinner ").fadeOut(2000,function(){
   $("#loading ").fadeOut(3000); 
+  $("#loading").remove();
 }); 
   
  });
-
-// flash
+ 
 
  

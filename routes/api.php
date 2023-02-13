@@ -3,27 +3,44 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get("/v0/allusers",'APIController@getAllUsers');
-Route::get("/v0/allposts",'APIController@getAllPosts');
-Route::get("/v0/getPost/{post_id}",'APIController@getPost');
-Route::get("/v0/getUserPosts/{user_id}",'APIController@getUserPosts');
+use App\Models\{User,Post,Comment,Reply,Follow};
 
- 
-Route::post("/v0/addpost","APIController@addPost");
-Route::post("/v0/updatepost/{post_id}","APIController@updatePost");
-Route::get("/v0/deletepost/{post_id}","APIController@destroyPost");
+Route::get("v0/admin/users",function(){
 
+try{
+        $users = User::all();
+        if(! is_null($users)){
+            return response(
+                ["Total Records"=>count($users),"users"=>$users,"status"=>"OK"]
+                ,200);
+        }
+}
+catch(\Exception $ex){
+    return response(["users"=>"NO Data","error"=>$ex],404);
+}
 
-
-Route::post('register', 'JwtAuthController@register');
-
-
-Route::group([
-    'prefix' => 'auth'
-], function () {
-    Route::post('register', 'JWTAuthController@register');
-    Route::post('login', 'JWTAuthController@login');
-    Route::post('logout', 'JWTAuthController@logout');
-    Route::post('refresh', 'JWTAuthController@refresh');
-    Route::post('profile', 'JWTAuthController@getUser');
 });
+
+
+
+
+Route::get("v0/admin/users/{id}",function($id){
+
+    try{
+            $user = User::where("id",$id)->first();
+            if($user){
+                return response(
+                    ["user"=>$user,"status"=>"OK"]
+                    ,200);
+            }
+            else
+            return response(["user"=>"User Not Found","status"=>"404"],404);
+
+
+    }
+    catch(\Exception $ex){
+        return response(["users"=>"NO Data","error"=>$ex,"status"=>"404"],404);
+    }
+    
+    });
+    

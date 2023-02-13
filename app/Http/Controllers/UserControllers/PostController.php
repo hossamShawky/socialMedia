@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Validator;
 use App\Helpers\General;
-use App\Models\{Post,Love};
+use App\Models\{Post,Love,Comment,Reply};
 
 use Auth;  
 use Illuminate\Support\Facades\DB;
@@ -99,9 +99,18 @@ if($post) {
         try{
   $post = Post::find($id);
 if(! is_null($post)){
+    // $post->comments->
+     $comments=Comment::with("user")->whereHas('user',
+     function($q){ $q->where("status","1");} )
+     ->orderBy("created_at","DESC")
+     ->where("post_id",$id)
+     ->get(['id','user_id','content','media','created_at']);
 
-     $comments=$post->comments;
-     $replies=$post->replies;
+     $replies=Reply::with("user")->whereHas('user',
+     function($q){ $q->where("status","1");} )
+     ->orderBy("created_at","DESC")
+     ->where("post_id",$id)
+     ->get(['id','user_id','post_id','comment_id','reply_id','content','media','created_at']);
  
      return view("post.viewPost",compact(['post','comments','replies']));
 
@@ -109,7 +118,7 @@ if(! is_null($post)){
 else
 return  redirect()->back()->with('error'," This Post Not Found.");
 
-        }
+        } 
         catch(\Exception $ex){
              return $ex;
             return  redirect()->back()->with('error'," There Is Some Problems.");

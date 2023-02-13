@@ -3,35 +3,10 @@
 @section("content")
 
 <div class=" container-fluid">
-  
- 
-         <!-- @if(Session::has('error'))
-        <div class="container alert alert-danger alert-block">
-<button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong>    {{Session('error')}}                </strong>
-        </div>
-        @endif
-        @if(Session::has('message'))
-        <div class="container alert alert-success alert-block">
-<button type="button" class="close" data-dismiss="alert">×</button>
-                 <strong>    {{Session('message')}}                </strong>
-        </div>
-        @endif -->
-
-        
+   
+@include("includes.sessions") 
+       
 <!-- get all posts -->
- 
-
-
-          
-<div class="col-lg-12 col-md-12 col-sm-12  text-center">
-  @if(Session::has('error'))
-      <b class="alert alert-danger">{{Session('error')}}</b>
-  @endif
-  @if(Session::has('message'))
-      <b class="alert alert-success">{{Session('message')}}</b>
-  @endif
-</div>
  
 <!-- Comments  -->
 <div class="bootstrap snippets bootdey">

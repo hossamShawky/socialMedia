@@ -299,7 +299,7 @@ href="{{route('notification.read',[$notification->id,$notification->data['postId
         <main class="py-4">
             @yield('content')
             <router-view></router-view>
-<button onclick="scrollToTop()" id="btn-top" class="btn btn-info" title="Go To Top"> 
+<button id="btn-top" class="btn btn-info" title="Go To Top"> 
     <i class="fa fa-arrow-up fa-lg"></i>
 </button>
         </main>

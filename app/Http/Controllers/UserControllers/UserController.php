@@ -21,15 +21,17 @@ class UserController extends Controller
     public function index()
     {
         try{
-$posts= Post::orderBy("created_at","DESC")
-// ->where("privacy","All")
-            ->get(['id','user_id','content','media','created_at'])
-            ;
+            // return User::where("status","1")->get();
+ $posts= Post::with("user")->whereHas('user',
+            function($q){ $q->where("status","1");} )
+            ->orderBy("created_at","DESC")
+            ->where("privacy","All")
+            ->get(['id','user_id','content','media','created_at']);
 
             return view("user.index",compact('posts'));
         }
         catch(\Exception $ex){
-            // return $ex;
+                 // return $ex;
             return  redirect()->back()->with('error'," There Is Some Problems.");
     
         }

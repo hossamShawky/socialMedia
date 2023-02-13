@@ -12,6 +12,7 @@ a {
     color: #82b440;
     text-decoration: none;
 }
+/* START POST-BODY */
 .blog-comment::before,
 .blog-comment::after,
 .blog-comment-form::before,
@@ -95,6 +96,7 @@ a {
 	font-weight: 800;
 } 
 
+/* START FOLLOW */
 
 .modal-dialog {
 
@@ -107,11 +109,7 @@ a {
 	border-radius: 50%;
 	margin-right: 5%;
 }
-
-
-
- 
-
+/*START LOADING */
 #loading {
 
 	position: fixed;
@@ -129,3 +127,7 @@ a {
  	text-align: center;
 	margin:  15% 0 0 50% ;
 }
+
+/* START LOVES LIST */
+
+
