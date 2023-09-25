@@ -122,8 +122,7 @@ catch(\Exception $ex){
    
        catch(\Exception $ex){
         //    return $ex;
-	       DB::rollback();
-	       return $ex;
+           DB::rollback();
            return  redirect()->back()->with('error'," There Is Some Problems.");
    
        }

@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Laravel   Laravel  "SERVER-2"  {{gethostname();}}
                 </div>
 
                 <div class="links">
