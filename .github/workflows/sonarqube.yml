@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11' # or any version your project requires
+        distribution: 'temurin' # Specify the Java distribution, e.g., 'temurin'
 
     - name: Cache SonarScanner
       uses: actions/cache@v2
