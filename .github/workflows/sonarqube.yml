@@ -32,7 +32,7 @@ jobs:
 
     - name: Run SonarQube Scan
       run: |
-        sonar-scanner -Dsonar.projectKey=your_project_key \
-                      -Dsonar.organization=your_organization_name \
-                      -Dsonar.host.url=https://your-sonarqube-server-url \
-                      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        sonar-scanner -Dsonar.projectKey=TurboShipping \
+                      -Dsonar.host.url=https://1bd040b7-c6b4-4122-bee7-730d7d2b3d3f-10-244-3-70-30677.spch.r.killercoda.com  \
+                      -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+                      -Dsonar.sources=.
