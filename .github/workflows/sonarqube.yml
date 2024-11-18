@@ -33,7 +33,7 @@ jobs:
       
     - name: Run SonarQube Scan
       run: |
-        sonar-scanner -Dsonar.projectKey=TurboShipping \
-                      -Dsonar.host.url=https://1bd040b7-c6b4-4122-bee7-730d7d2b3d3f-10-244-3-70-30677.spch.r.killercoda.com  \
+        sonar-scanner -Dsonar.projectKey=Demo \
+                      -Dsonar.host.url=https://9f31638f-040e-4252-8c15-3a5aee15483f-10-244-5-130-30326.spch.r.killercoda.com  \
                       -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
                       -Dsonar.sources=.
