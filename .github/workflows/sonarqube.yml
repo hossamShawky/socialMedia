@@ -1,32 +1,38 @@
-name: SonarQube Analysis
+name: SonarQube Scan
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  sonarQubeAnalysis:
+  sonar-scanner:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # Run static analysis with SonarQube
-      - name: Run SonarQube Scanner
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          curl -o sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.1.2.36732-linux.zip
-          unzip sonar-scanner.zip
-          mv sonar-scanner-5.1.2.36732-linux sonar-scanner
-          ./sonar-scanner/bin/sonar-scanner \
-            -Dsonar.projectKey=TurboShipping \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://1bd040b7-c6b4-4122-bee7-730d7d2b3d3f-10-244-3-70-30677.spch.r.killercoda.com \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11' # or any version your project requires
+
+    - name: Cache SonarScanner
+      uses: actions/cache@v2
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar-cache-${{ hashFiles('**/sonar-project.properties') }}
+
+    - name: Install SonarScanner
+      run: |
+        curl -sSfL https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/4.7.0.2740/sonar-scanner-cli-4.7.0.2740-linux.zip -o sonar-scanner.zip
+        unzip sonar-scanner.zip -d $HOME/
+        echo "$HOME/sonar-scanner-4.7.0.2740-linux/bin" >> $GITHUB_PATH
+
+    - name: Run SonarQube Scan
+      run: |
+        sonar-scanner -Dsonar.projectKey=your_project_key \
+                      -Dsonar.organization=your_organization_name \
+                      -Dsonar.host.url=https://your-sonarqube-server-url \
+                      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
