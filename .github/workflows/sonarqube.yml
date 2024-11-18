@@ -27,10 +27,10 @@ jobs:
 
     - name: Install SonarScanner
       run: |
-        curl -sSfL https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/4.7.0.2740/sonar-scanner-cli-4.7.0.2740-linux.zip -o sonar-scanner.zip
-        unzip sonar-scanner.zip -d $HOME/
-        echo "$HOME/sonar-scanner-4.7.0.2740-linux/bin" >> $GITHUB_PATH
-
+          curl -sSfL https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip -o sonar-scanner.zip
+          unzip sonar-scanner.zip -d $HOME/
+          echo "$HOME/sonar-scanner-4.8.0.2856-linux/bin" >> $GITHUB_PATH
+      
     - name: Run SonarQube Scan
       run: |
         sonar-scanner -Dsonar.projectKey=TurboShipping \
