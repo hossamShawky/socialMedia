@@ -17,18 +17,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Set up PHP
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.0' # Change this to match your PHP version
-          extensions: mbstring, tokenizer, xml, curl
-          coverage: none
-
-      # Install dependencies
-      - name: Install Composer Dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist
-
       # Run static analysis with SonarQube
       - name: Run SonarQube Scanner
         env:
