@@ -1,0 +1,25 @@
+name: Run CS Fixer
+
+on: [push]
+
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Run PHP CS Fixer
+        uses: docker://hossam23/php-cs-fixer-ga:latest
+        with:
+          args: .
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v2.3.0
+        with:
+          commit_message: Fix Code styling
+          branch: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
